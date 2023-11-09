@@ -5,6 +5,7 @@ import { DisasterController } from './disaster/disaster.controller';
 import { DisasterService } from './disaster/disaster.service';
 import { Info } from './const';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DisasterModule } from './disaster/disaster.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(
@@ -18,8 +19,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true
     }
-  )],
-  controllers: [DisasterController],
-  providers: [DisasterService, Info],
+  ), DisasterModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

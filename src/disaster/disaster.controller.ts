@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { DisasterService } from './disaster.service';
 
 @Controller('disaster')
@@ -10,7 +10,9 @@ export class DisasterController {
     }
 
     @Get()
-    findAll() {
-        return '返回所有记录';
+    findAll(@Query() paginationQuery) {
+        const { limit, offset } = paginationQuery ;
+        return this.disasterService.findAll();
+        // http://localhost:3000/disaster?limit=5&offset=1
     }
 }

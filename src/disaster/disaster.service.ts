@@ -1,10 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { Info } from '../const';
+import { Code } from './entities/disaster.eneity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { stringify } from 'querystring';
 
 @Injectable()
 export class DisasterService {
     // 应该是在此处实现转换的逻辑
-    constructor(private readonly info: Info) {}
+    constructor(
+        private readonly info: Info,
+        @InjectRepository(Code)
+        private readonly disasterRepository: Repository<Code>,
+        ) {}
+
+    findLocation(code: string) {
+        // 我都不知道编码是什么
+        // 之后再做了
+    }
 
     findTime(code: string) {
         // 13-26
@@ -143,8 +156,17 @@ export class DisasterService {
         return info;
     }
 
-    findOne(code: string) {
-        var result = this.findTime(code) + this.findSource(code) + this.findCarrier(code) + this.findDisaster(code);
-        return result;
+    async findOne(id: string) {
+        if (id.length > 2){
+            var result = this.findTime(id) + this.findSource(id) + this.findCarrier(id) + this.findDisaster(id);
+            return result;
+        }
+        else{
+            const code = await this.disasterRepository.findOne({where: {id: id}});
+        }
+    }
+
+    findAll() {
+        return this.disasterRepository.find();
     }
 }
