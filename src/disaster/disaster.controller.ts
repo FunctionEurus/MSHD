@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { DisasterService } from './disaster.service';
+import { CreateDisasterDto } from './dto/create-disaster.dto/create-disaster.dto';
+import { Code } from 'typeorm';
 
 @Controller('disaster')
 export class DisasterController {
@@ -19,6 +21,6 @@ export class DisasterController {
 
     @Post()
     create(@Body() body) {
-        return this.disasterService.create(body);
+        return this.disasterService.create(body.code);
     }
 }

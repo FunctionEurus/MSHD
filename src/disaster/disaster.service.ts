@@ -165,6 +165,7 @@ export class DisasterService {
         }
         else{
             const code = await this.disasterRepository.findOne({where: {id: id}});
+            return code;
         }
     }
 
@@ -176,8 +177,16 @@ export class DisasterService {
         });
     }
 
-    create(createDisasterDto: CreateDisasterDto) {
-        const disaster = this.disasterRepository.create(createDisasterDto);
+    create(code: string) {
+        const disaster = new CreateDisasterDto();
+
+        disaster.code = code;
+        disaster.location = '地区码太多了还没加，就先搁置。';
+        disaster.time = this.findTime(code);
+        disaster.source = this.findSource(code);
+        disaster.carrier = this.findCarrier(code);
+        disaster.disaster = this.findDisaster(code);
+
         return this.disasterRepository.save(disaster);
     }
 }

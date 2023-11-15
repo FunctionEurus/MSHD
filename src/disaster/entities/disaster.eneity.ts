@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+@Index(['location', 'time', 'source', 'carrier', 'disaster'])
 @Entity() // sql table === 'code'
 export class Code {
     @PrimaryGeneratedColumn()
@@ -9,7 +9,7 @@ export class Code {
     location: string;
 
     @Column()
-    time: string;
+    time: Date;
 
     @Column()
     source: string;
@@ -22,5 +22,4 @@ export class Code {
 
     @Column()
     code: string;
-    // 编码
 }
