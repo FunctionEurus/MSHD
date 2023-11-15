@@ -5,5 +5,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
   // here is the port
+  transformOptions: {
+    enableImplicitConversion: true;
+  };
 }
 bootstrap();

@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { DisasterService } from './disaster.service';
 
 @Controller('disaster')
@@ -10,9 +11,14 @@ export class DisasterController {
     }
 
     @Get()
-    findAll(@Query() paginationQuery) {
+    findAll(@Query() paginationQuery: PaginationQueryDto) {
         const { limit, offset } = paginationQuery ;
-        return this.disasterService.findAll();
+        return this.disasterService.findAll(paginationQuery);
         // http://localhost:3000/disaster?limit=5&offset=1
+    }
+
+    @Post()
+    create(@Body() body) {
+        return this.disasterService.create(body);
     }
 }

@@ -4,6 +4,8 @@ import { Code } from './entities/disaster.eneity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { stringify } from 'querystring';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
+import { CreateDisasterDto } from './dto/create-disaster.dto/create-disaster.dto';
 
 @Injectable()
 export class DisasterService {
@@ -166,7 +168,16 @@ export class DisasterService {
         }
     }
 
-    findAll() {
-        return this.disasterRepository.find();
+    findAll(paginationQuery: PaginationQueryDto) {
+        const { limit, offset } = paginationQuery;
+        return this.disasterRepository.find({
+            skip: offset,
+            take: limit,
+        });
+    }
+
+    create(createDisasterDto: CreateDisasterDto) {
+        const disaster = this.disasterRepository.create(createDisasterDto);
+        return this.disasterRepository.save(disaster);
     }
 }

@@ -19,4 +19,8 @@ export class Code {
 
     @Column()
     disaster: string;
+
+    @Column()
+    code: string;
+    // 编码
 }
