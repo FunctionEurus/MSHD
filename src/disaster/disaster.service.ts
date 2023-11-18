@@ -164,8 +164,8 @@ export class DisasterService {
             return result;
         }
         else{
-            // const code = await this.disasterRepository.findOne({where: {id: id}});
-            // return code;
+            const code = await this.disasterRepository.findOne({where: {id: id}});
+            return code;
         }
     }
 
