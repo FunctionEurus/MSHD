@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { DisasterService } from './disaster.service';
 import { CreateDisasterDto } from './dto/create-disaster.dto/create-disaster.dto';
@@ -22,5 +22,17 @@ export class DisasterController {
     @Post()
     create(@Body() body) {
         return this.disasterService.create(body.code);
+    }
+
+    @Patch(':id')
+    async update(@Param('id') id: string, @Body() body) {
+        const updateDisasterDto = this.disasterService.create(body.code);
+        return this.disasterService.update(id, await updateDisasterDto);
+    }
+
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        this.disasterService.remove(id);
+        return `Already remove the ${id}th record.`
     }
 }

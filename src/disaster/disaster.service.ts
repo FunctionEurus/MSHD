@@ -159,14 +159,19 @@ export class DisasterService {
     }
 
     async findOne(id: string) {
-        if (id.length > 2){
+        if (id.length == 36){
             var result = this.findTime(id) + this.findSource(id) + this.findCarrier(id) + this.findDisaster(id);
             return result;
         }
         else{
-            const code = await this.disasterRepository.findOne({where: {id: id}});
-            return code;
+            // const code = await this.disasterRepository.findOne({where: {id: id}});
+            // return code;
         }
+    }
+
+    async findOneDto(id: string) {
+        const code = await this.disasterRepository.findOne({where: {id: id}});
+        return code;
     }
 
     findAll(paginationQuery: PaginationQueryDto) {
@@ -189,4 +194,22 @@ export class DisasterService {
 
         return this.disasterRepository.save(disaster);
     }
+
+    async update(id: string, updateDisasterDto: CreateDisasterDto): Promise<Code> {
+        const disaster = await this.findOneDto(id);
+        // You can update specific properties of the disaster entity here
+        disaster.location = updateDisasterDto.location;
+        disaster.time = updateDisasterDto.time;
+        disaster.source = updateDisasterDto.source;
+        disaster.carrier = updateDisasterDto.carrier;
+        disaster.disaster = updateDisasterDto.disaster;
+        disaster.code = updateDisasterDto.code;
+    
+        return this.disasterRepository.save(disaster);
+      }
+
+      async remove(id: string): Promise<void> {
+        const disaster = await this.findOneDto(id);
+        await this.disasterRepository.remove(disaster);
+      }
 }
