@@ -1,25 +1,26 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+/* eslint-disable prettier/prettier */
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 @Index(['location', 'time', 'source', 'carrier', 'disaster'])
 @Entity() // sql table === 'code'
 export class Code {
-    @PrimaryGeneratedColumn()
-    id: string;
+  @PrimaryGeneratedColumn()
+  id: string;
 
-    @Column()
-    location: string;
+  @Column()
+  location: string;
 
-    @Column()
-    time: Date;
+  @Column()
+  time: Date;
 
-    @Column()
-    source: string;
+  @Column()
+  source: string;
 
-    @Column()
-    carrier: string;
+  @Column()
+  carrier: string;
 
-    @Column()
-    disaster: string;
+  @Column()
+  disaster: string;
 
-    @Column()
-    code: string;
+  @Column()
+  code: string;
 }
